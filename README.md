@@ -35,10 +35,11 @@ dich in der App auf allen Geräten abmeldest oder dein Passwort änderst – Hom
 
 ### Kameras und Datenvolumen
 
-Das Bild kommt über das LTE-Netz des Anhängers. Deshalb holt Home Assistant es **nur, solange jemand
-zuschaut**. Vorschaubilder (z. B. in einer Kachel) gibt es nur, während das Live-Bild läuft – sonst
-bleibt die Vorschau leer. Für ein Dashboard am besten die Karte „Bild-Entität“ bzw. „Bild-Ansicht“
-mit `camera_view: live` verwenden und nur öffnen, wenn man wirklich schauen möchte.
+Das Bild kommt über das LTE-Netz des Anhängers. Deshalb holt Home Assistant das **Live-Bild nur, solange
+jemand zuschaut**. Vorschaubilder (z. B. in einer Kachel) sind **Standbilder vom K9SNTNL-Server**: je Kamera
+höchstens eins alle 30–90 Sekunden – wie oft, stellt der Eigentümer in der App unter „Einrichten → Kameras“ ein –
+und nur, solange ein Dashboard mit der Kamera offen ist. Jedes Standbild kostet etwa 0,3–1 MB.
+Ein Dashboard, das rund um die Uhr offen ist (z. B. ein Wand-Tablet), holt also ständig Standbilder.
 
 Die Werte werden alle 30 Sekunden abgefragt.
 

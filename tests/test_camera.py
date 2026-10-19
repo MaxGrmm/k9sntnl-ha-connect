@@ -50,14 +50,27 @@ async def test_kamera_noch_nicht_eingerichtet(hass: HomeAssistant, aioclient_moc
     assert await entity.stream_source() is None
 
 
-async def test_kein_standbild_ohne_zuschauer(hass: HomeAssistant, aioclient_mock, entry):
-    """Vorschaubilder dürfen das Live-Bild nicht starten (LTE-Datenvolumen)."""
+async def test_standbild_vom_server(hass: HomeAssistant, aioclient_mock, entry, token):
+    """Vorschaubilder kommen vom Server (höchstens alle 30–90 s ein neues) – nicht aus dem Live-Bild."""
     await setup(hass, aioclient_mock, entry)
+    jpeg = b"\xff\xd8\xff\xe0" + secrets.token_bytes(32)
+    aioclient_mock.get(f"{URL}/cameras/50/snapshot", content=jpeg, headers={"Content-Type": "image/jpeg"})
     entity_id, _ = camera_entity(hass, entry, 50)
-    calls_before = len(aioclient_mock.mock_calls)
+    image = await async_get_image(hass, entity_id)
+    assert image.content == jpeg and image.content_type == "image/jpeg"
+    call = aioclient_mock.mock_calls[-1]
+    assert str(call[1]).endswith("/cameras/50/snapshot") and call[3]["Authorization"] == f"Bearer {token}"
+    assert not any("/stream" in str(c[1]) for c in aioclient_mock.mock_calls)  # Live-Bild nicht geöffnet
+
+
+@pytest.mark.parametrize("status", [503, 409, 404])
+async def test_kein_standbild(hass: HomeAssistant, aioclient_mock, entry, status):
+    """Anhänger offline ohne früheres Bild (503), Kamera nicht eingerichtet (409), alter Server (404)."""
+    await setup(hass, aioclient_mock, entry)
+    aioclient_mock.get(f"{URL}/cameras/50/snapshot", status=status, json={"detail": "x"})
+    entity_id, _ = camera_entity(hass, entry, 50)
     with pytest.raises(HomeAssistantError):
         await async_get_image(hass, entity_id)
-    assert len(aioclient_mock.mock_calls) == calls_before  # keine Video-Adresse geholt
 
 
 class FakeStream:
