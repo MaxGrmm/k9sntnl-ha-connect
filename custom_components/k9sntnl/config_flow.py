@@ -16,6 +16,16 @@ from .api import K9Api, K9AuthError, K9Error, K9PairingError, K9RateLimitError
 from .const import CONF_CODE, CONF_TOKEN, CONF_URL, DEFAULT_URL, DOMAIN
 
 
+def normalize_url(url: str) -> str:
+    """„App.k9sntnl.de/“ → „https://app.k9sntnl.de“ (ohne https:// klappt die Verbindung sonst nicht)."""
+    url = url.strip().rstrip("/")
+    if "://" not in url:
+        url = f"https://{url}"
+    scheme, rest = url.split("://", 1)
+    host, slash, path = rest.partition("/")
+    return f"{scheme.lower()}://{host.lower()}{slash}{path}"
+
+
 class K9ConfigFlow(ConfigFlow, domain=DOMAIN):
     VERSION = 1
 
@@ -35,7 +45,7 @@ class K9ConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         errors: dict[str, str] = {}
         if user_input is not None:
-            url = user_input[CONF_URL].rstrip("/")
+            url = normalize_url(user_input[CONF_URL])
             result, errors = await self._pair(url, user_input[CONF_CODE])
             if result is not None:
                 # Ein Eintrag je K9SNTNL-Konto

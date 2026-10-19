@@ -3,7 +3,7 @@
 from datetime import timedelta
 
 DOMAIN = "k9sntnl"
-DEFAULT_URL = "https://api.k9sntnl.de"
+DEFAULT_URL = "https://app.k9sntnl.de"
 CONF_URL = "url"
 CONF_TOKEN = "token"
 CONF_CODE = "code"
