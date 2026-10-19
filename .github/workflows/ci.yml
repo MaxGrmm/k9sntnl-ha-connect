@@ -23,3 +23,14 @@ jobs:
           python-version: "3.13"
       - run: pip install -r requirements-dev.txt
       - run: pytest -q
+
+  hacs:
+    name: HACS-Prüfung
+    runs-on: ubuntu-latest
+    steps:
+      - uses: hacs/action@main
+        with:
+          category: integration
+          # Das Symbol liefert die Integration selbst mit (custom_components/k9sntnl/brand/, ab Home Assistant 2026.3);
+          # ein Eintrag im Repo home-assistant/brands ist dafür nicht nötig
+          ignore: brands
