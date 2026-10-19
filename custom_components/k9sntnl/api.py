@@ -28,6 +28,10 @@ class K9RateLimitError(K9PairingError):
     """Zu viele falsche Codes – der Server sperrt diese Adresse für 15 Minuten."""
 
 
+class K9NotReady(K9Error):
+    """Kamera ist am Server noch nicht fertig eingerichtet (z. B. Pfad am NVR fehlt)."""
+
+
 class K9Api:
     def __init__(self, session: aiohttp.ClientSession, url: str, token: str | None = None) -> None:
         self._session = session
@@ -46,6 +50,8 @@ class K9Api:
                     raise K9RateLimitError("Zu viele Fehlversuche")
                 if response.status == 400 and path == "/integrations/pair":
                     raise K9PairingError("Code ungültig oder abgelaufen")
+                if response.status == 409:
+                    raise K9NotReady(f"HTTP 409 bei {path}")
                 if response.status >= 400:
                     raise K9Error(f"HTTP {response.status} bei {path}")
                 return await response.json()
@@ -61,3 +67,9 @@ class K9Api:
         summaries = await self._request("GET", "/trailers")
         return [await self._request("GET", f"/trailers/{summary['id']}") for summary in summaries]
 
+
+    async def stream_url(self, camera_id: int) -> str:
+        """Adresse des Live-Bilds (HLS) mit kurzlebigem Token – innerhalb weniger Minuten öffnen."""
+        data = await self._request("GET", f"/cameras/{camera_id}/stream")
+        url = data["url"]
+        return url if url.startswith("http") else f"{self._url}{url}"  # der Server liefert sie relativ
