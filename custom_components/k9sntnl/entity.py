@@ -24,22 +24,29 @@ def trailer_device(trailer: dict[str, Any]) -> DeviceInfo:
 
 
 def box_device(trailer: dict[str, Any], box: dict[str, Any]) -> DeviceInfo:
-    """Jede Box ist ein eigenes Gerät „am“ Anhänger (z. B. „Unser Anhänger Box 1“)."""
+    """Jede Box ist ein eigenes Gerät „am“ Anhänger (z. B. „Unser Anhänger Box 1“).
+
+    Die Verbindung zum Anhänger setzt `register_devices` – nicht über `via_device` hier, denn das
+    lehnen neuere Home-Assistant-Versionen ab („use via_device_id instead“)."""
     return DeviceInfo(
         identifiers={(DOMAIN, f"{trailer['identifier']}-box-{box['id']}")},
         name=f"{trailer['name']} {box['name']}",
         manufacturer="K9SNTNL",
         model="Box",
-        via_device=(DOMAIN, trailer["identifier"]),
     )
 
 
 @callback
-def register_trailers(hass: HomeAssistant, coordinator: K9Coordinator) -> None:
-    """Anhänger als Geräte anlegen, bevor die Boxen sie als übergeordnetes Gerät nennen."""
+def register_devices(hass: HomeAssistant, coordinator: K9Coordinator) -> None:
+    """Anhänger und Boxen als Geräte anlegen, bevor Entitäten sie nennen; Boxen hängen am Anhänger."""
     registry = dr.async_get(hass)
+    entry_id = coordinator.config_entry.entry_id
     for trailer in coordinator.data.values():
-        registry.async_get_or_create(config_entry_id=coordinator.config_entry.entry_id, **trailer_device(trailer))
+        parent = registry.async_get_or_create(config_entry_id=entry_id, **trailer_device(trailer))
+        for box in trailer["boxes"]:
+            device = registry.async_get_or_create(config_entry_id=entry_id, **box_device(trailer, box))
+            if device.via_device_id != parent.id:
+                registry.async_update_device(device.id, via_device_id=parent.id)
 
 
 class K9Entity(CoordinatorEntity[K9Coordinator]):
