@@ -38,7 +38,7 @@ class K9Api:
         self._url = url.rstrip("/")
         self._token = token
 
-    async def _request(self, method: str, path: str, **kwargs: Any) -> Any:
+    async def _request(self, method: str, path: str, raw: bool = False, **kwargs: Any) -> Any:
         headers = {"Authorization": f"Bearer {self._token}"} if self._token else {}
         try:
             async with self._session.request(
@@ -54,7 +54,7 @@ class K9Api:
                     raise K9NotReady(f"HTTP 409 bei {path}")
                 if response.status >= 400:
                     raise K9Error(f"HTTP {response.status} bei {path}")
-                return await response.json()
+                return await response.read() if raw else await response.json()
         except (aiohttp.ClientError, TimeoutError) as error:
             raise K9Error(f"Server nicht erreichbar: {error}") from error
 
@@ -73,3 +73,15 @@ class K9Api:
         data = await self._request("GET", f"/cameras/{camera_id}/stream")
         url = data["url"]
         return url if url.startswith("http") else f"{self._url}{url}"  # der Server liefert sie relativ
+
+    async def snapshot(self, camera_id: int) -> bytes | None:
+        """Standbild (JPEG) vom Server – höchstens alle 30–90 s ein neues, das stellt der Eigentümer in der App ein.
+        None, wenn es gerade keins gibt (Anhänger offline ohne früheres Bild, Kamera nicht eingerichtet)."""
+        try:
+            return await self._request("GET", f"/cameras/{camera_id}/snapshot", raw=True)
+        except K9NotReady:
+            return None
+        except K9Error as error:
+            if "HTTP 503" in str(error):
+                return None
+            raise

@@ -1,7 +1,9 @@
 """Kameras als Kamera-Entitäten: Live-Bild (HLS) über den K9SNTNL-Server.
 
 Das Bild kommt aus dem Anhänger über LTE. Damit kein Datenvolumen verloren geht, holt Home Assistant
-es nur, solange jemand zuschaut – Standbilder gibt es nur aus einem laufenden Live-Bild.
+das Live-Bild nur, solange jemand zuschaut. Standbilder (Vorschau, Kacheln) kommen vom Server
+(`GET /cameras/{id}/snapshot`): Er macht je Kamera höchstens alle 30–90 s ein neues – wie oft, stellt
+der Eigentümer in der K9SNTNL-App ein – und nur, solange jemand fragt.
 
 Die Video-Adresse enthält ein kurzlebiges Token (10 Minuten zum Öffnen). Ein laufendes Bild bleibt
 danach offen; für den nächsten Start holt die Integration rechtzeitig eine neue Adresse.
@@ -87,10 +89,12 @@ class K9Camera(K9Entity, Camera):
         return url
 
     async def async_camera_image(self, width: int | None = None, height: int | None = None) -> bytes | None:
-        """Standbild nur aus einem laufenden Live-Bild – sonst würde jedes Vorschaubild LTE-Daten kosten."""
-        if self.stream is not None and self.stream.available and self.stream.outputs():
-            return await self.stream.async_get_image(width, height)
-        return None
+        """Standbild vom Server (siehe oben); Home Assistant verkleinert es bei Bedarf selbst."""
+        try:
+            return await self.coordinator.api.snapshot(self.camera_id)
+        except K9Error as error:
+            _LOGGER.debug("Kein Standbild für Kamera %s: %s", self.camera_id, error)
+            return None
 
     @callback
     def _handle_coordinator_update(self) -> None:
