@@ -12,6 +12,9 @@ Home Assistant kann dabei **nur lesen**, nichts ändern – mit denselben Rechte
    `https://github.com/MaxGrmm/k9sntnl-ha-connect`, Typ **Integration**.
 2. „K9SNTNL“ herunterladen und Home Assistant neu starten.
 
+Updates zeigt HACS an, sobald es ein neues [Release](https://github.com/MaxGrmm/k9sntnl-ha-connect/releases) gibt.
+Sofort prüfen: in HACS bei K9SNTNL **⋮ → Informationen aktualisieren**.
+
 ## Verbinden
 
 1. In der K9SNTNL-App: **Mein Konto → Home Assistant → Home Assistant verbinden**. Die App zeigt einen
