@@ -1,2 +1,4 @@
 # Tests: bringt Home Assistant in passender Version mit
 pytest-homeassistant-custom-component==0.13.316
+# braucht die Kamera-Komponente von Home Assistant in den Tests
+PyTurboJPEG==1.8.0

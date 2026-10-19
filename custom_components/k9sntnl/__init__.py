@@ -11,7 +11,7 @@ from .const import CONF_TOKEN, CONF_URL
 from .coordinator import K9ConfigEntry, K9Coordinator
 from .entity import register_trailers
 
-PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
+PLATFORMS = [Platform.BINARY_SENSOR, Platform.CAMERA, Platform.SENSOR]
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: K9ConfigEntry) -> bool:

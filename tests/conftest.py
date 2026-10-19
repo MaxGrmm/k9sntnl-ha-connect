@@ -35,7 +35,8 @@ def trailer_detail(**changes) -> dict:
         "status": "online", "tunnel_status": "offline", "last_seen": "2026-10-18T20:00:00Z",
         "tunnel_checked_at": None, "air_conditioner_count": 0, "license": "standard",
         "boxes": [{"id": 10, "name": "Box 1", "position": 1}],
-        "cameras": [],
+        "cameras": [{"id": 50, "name": "Box 1 Kamera", "box_id": 10, "stream_path": "k9-0001/cam1"},
+                    {"id": 51, "name": "Rückfahrkamera", "box_id": None, "stream_path": "k9-0001/rear"}],
         "sensors": [
             {"id": 100, "name": "Box 1 Temperatur", "box_id": 10, "kind": "temperature", "unit": "°C", "key": "t1",
              "last_value": 21.5, "last_time": "2026-10-18T20:00:00Z", "min_value": 5.0, "max_value": 28.0,
