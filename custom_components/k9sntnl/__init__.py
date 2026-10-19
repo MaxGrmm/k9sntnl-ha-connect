@@ -9,7 +9,7 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from .api import K9Api
 from .const import CONF_TOKEN, CONF_URL
 from .coordinator import K9ConfigEntry, K9Coordinator
-from .entity import register_trailers
+from .entity import register_devices
 
 PLATFORMS = [Platform.BINARY_SENSOR, Platform.CAMERA, Platform.SENSOR]
 
@@ -19,9 +19,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: K9ConfigEntry) -> bool:
     coordinator = K9Coordinator(hass, entry, api)
     await coordinator.async_config_entry_first_refresh()
     entry.runtime_data = coordinator
-    register_trailers(hass, coordinator)
-    # Neue Anhänger zuerst als Gerät anlegen (dieser Listener läuft vor denen der Plattformen)
-    entry.async_on_unload(coordinator.async_add_listener(lambda: register_trailers(hass, coordinator)))
+    register_devices(hass, coordinator)
+    # Neue Anhänger und Boxen zuerst als Gerät anlegen (dieser Listener läuft vor denen der Plattformen)
+    entry.async_on_unload(coordinator.async_add_listener(lambda: register_devices(hass, coordinator)))
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
 

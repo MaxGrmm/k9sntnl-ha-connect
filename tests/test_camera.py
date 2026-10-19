@@ -78,3 +78,23 @@ class FakeStream:
 def test_wann_neue_adresse(age, watching, available, expected):
     stream = FakeStream(watching, available)
     assert camera_module.needs_new_source(stream, time.monotonic() - age) is expected
+
+
+async def test_zwei_boxen_mit_kamera_ohne_via_device(hass: HomeAssistant, aioclient_mock, entry, caplog):
+    """Rückmeldung aus dem Test: In neueren Home-Assistant-Versionen schlug die zweite Kamera wegen
+    `via_device` fehl. Die Boxen hängen jetzt per `via_device_id` am Anhänger."""
+    from .conftest import trailer_detail
+
+    detail = trailer_detail(
+        boxes=[{"id": 10, "name": "Box 1", "position": 1}, {"id": 11, "name": "Box 2", "position": 2}],
+        cameras=[{"id": 50, "name": "Kamera", "box_id": 10, "stream_path": "k9-0001/cam1"},
+                 {"id": 52, "name": "Kamera", "box_id": 11, "stream_path": "k9-0001/cam2"}],
+    )
+    await setup(hass, aioclient_mock, entry, detail)
+    assert sorted(s.entity_id for s in hass.states.async_all("camera")) == [
+        "camera.unser_anhanger_box_1_kamera", "camera.unser_anhanger_box_2_kamera"]
+    devices = dr.async_get(hass)
+    trailer = devices.async_get_device({(DOMAIN, "k9-0001")})
+    for box_id in (10, 11):
+        assert devices.async_get_device({(DOMAIN, f"k9-0001-box-{box_id}")}).via_device_id == trailer.id
+    assert "via_device" not in caplog.text
