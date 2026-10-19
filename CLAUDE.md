@@ -12,4 +12,5 @@
 - Offene Punkte als GitHub Issue anlegen. Nach jeder Änderung zu einem Issue einen vollständigen Kommentar
   darunter setzen: aktueller Gesamtstand, was geändert wurde, Link zum PR, was noch offen ist.
 - Fertige Änderungen direkt als Pull Request einreichen (nicht erst nachfragen) – außer der Projektinhaber
-  sagt ausdrücklich, dass kein PR erstellt werden soll. Bei jeder Änderung die Version in `manifest.json` erhöhen.
+  sagt ausdrücklich, dass kein PR erstellt werden soll. Bei jeder Änderung an der Integration die Version in `manifest.json`
+  erhöhen – nach dem Merge legt `.github/workflows/release.yml` daraus automatisch ein Release an (das sieht HACS).

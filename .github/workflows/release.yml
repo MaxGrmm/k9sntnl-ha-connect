@@ -1,0 +1,30 @@
+name: Release
+
+# Nach jedem Merge auf main: Gibt es zur Version in manifest.json noch kein Release, wird es angelegt.
+# HACS zeigt Updates anhand dieser Releases an (ohne Releases nur anhand von Commits, und das oft verzögert).
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Release anlegen
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Version aus manifest.json
+        id: version
+        run: echo "tag=v$(jq -r .version custom_components/k9sntnl/manifest.json)" >> "$GITHUB_OUTPUT"
+      - name: Release anlegen, falls es die Version noch nicht gibt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ steps.version.outputs.tag }}
+        run: |
+          if gh release view "$TAG" > /dev/null 2>&1; then
+            echo "Release $TAG gibt es schon – nichts zu tun."
+          else
+            gh release create "$TAG" --target "$GITHUB_SHA" --title "$TAG" --generate-notes
+          fi
