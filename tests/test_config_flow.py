@@ -4,7 +4,10 @@ from homeassistant import config_entries
 from homeassistant.core import HomeAssistant
 from homeassistant.data_entry_flow import FlowResultType
 
-from custom_components.k9sntnl.const import CONF_CODE, CONF_TOKEN, CONF_URL, DOMAIN
+import pytest
+
+from custom_components.k9sntnl.config_flow import normalize_url
+from custom_components.k9sntnl.const import CONF_CODE, CONF_TOKEN, CONF_URL, DEFAULT_URL, DOMAIN
 
 from .conftest import EMAIL, URL, trailer_detail
 
@@ -74,3 +77,16 @@ async def test_neu_verbinden_anderes_konto(hass: HomeAssistant, aioclient_mock, 
     result = await entry.start_reauth_flow(hass)
     result = await hass.config_entries.flow.async_configure(result["flow_id"], {CONF_CODE: "ABCD-EFGH"})
     assert result["type"] is FlowResultType.ABORT and result["reason"] == "wrong_account"
+
+
+@pytest.mark.parametrize("given, expected", [
+    ("App.k9sntnl.de", "https://app.k9sntnl.de"),
+    (" https://App.K9SNTNL.de/ ", "https://app.k9sntnl.de"),
+    ("http://192.168.1.5:8000", "http://192.168.1.5:8000"),
+])
+def test_adresse_vereinheitlichen(given, expected):
+    assert normalize_url(given) == expected
+
+
+def test_vorbelegte_adresse():
+    assert DEFAULT_URL == "https://app.k9sntnl.de"  # api.k9sntnl.de ist für die Integration nicht erreichbar
