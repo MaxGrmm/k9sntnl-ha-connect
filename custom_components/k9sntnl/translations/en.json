@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect K9SNTNL",
+        "description": "In the K9SNTNL app, open **My account → Home Assistant → Connect Home Assistant** and enter the code shown there. It is valid for 10 minutes.",
+        "data": {
+          "code": "Pairing code",
+          "url": "Server address"
+        },
+        "data_description": {
+          "code": "For example K7QP-4MZX",
+          "url": "Only change this if you run your own K9SNTNL server."
+        }
+      },
+      "reauth_confirm": {
+        "title": "Reconnect K9SNTNL",
+        "description": "The connection was disconnected in the app or has expired (e.g. after signing out on all devices or a new password). Create a new code in the app under **My account → Home Assistant** and enter it here.",
+        "data": {
+          "code": "Pairing code"
+        }
+      }
+    },
+    "error": {
+      "invalid_code": "The code is invalid or has expired. Please create a new one in the app.",
+      "too_many_attempts": "Too many wrong codes. Please wait 15 minutes.",
+      "cannot_connect": "The K9SNTNL server could not be reached."
+    },
+    "abort": {
+      "already_configured": "This K9SNTNL account is already connected.",
+      "reauth_successful": "Reconnected successfully.",
+      "wrong_account": "The code belongs to a different K9SNTNL account."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "sensors_online": { "name": "Sensors" },
+      "trailer_online": { "name": "Trailer" }
+    }
+  }
+}

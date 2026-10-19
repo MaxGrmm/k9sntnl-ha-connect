@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "K9SNTNL verbinden",
+        "description": "In der K9SNTNL-App unter **Mein Konto → Home Assistant → Home Assistant verbinden** einen Code erzeugen und hier eingeben. Er ist 10 Minuten gültig.",
+        "data": {
+          "code": "Kopplungs-Code",
+          "url": "Server-Adresse"
+        },
+        "data_description": {
+          "code": "Zum Beispiel K7QP-4MZX",
+          "url": "Nur ändern, wenn du einen eigenen K9SNTNL-Server betreibst."
+        }
+      },
+      "reauth_confirm": {
+        "title": "K9SNTNL neu verbinden",
+        "description": "Die Verbindung wurde in der App getrennt oder ist abgelaufen (z. B. nach „Auf allen Geräten abmelden“ oder einem neuen Passwort). Bitte in der App unter **Mein Konto → Home Assistant** einen neuen Code erzeugen und hier eingeben.",
+        "data": {
+          "code": "Kopplungs-Code"
+        }
+      }
+    },
+    "error": {
+      "invalid_code": "Der Code ist ungültig oder abgelaufen. Bitte in der App einen neuen erzeugen.",
+      "too_many_attempts": "Zu viele falsche Codes. Bitte 15 Minuten warten.",
+      "cannot_connect": "Der K9SNTNL-Server ist nicht erreichbar."
+    },
+    "abort": {
+      "already_configured": "Dieses K9SNTNL-Konto ist schon verbunden.",
+      "reauth_successful": "Erfolgreich neu verbunden.",
+      "wrong_account": "Der Code gehört zu einem anderen K9SNTNL-Konto."
+    }
+  },
+  "entity": {
+    "binary_sensor": {
+      "sensors_online": { "name": "Sensoren" },
+      "trailer_online": { "name": "Anhänger" }
+    }
+  }
+}
