@@ -56,5 +56,5 @@ python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 
 ## Lizenz
 
-Proprietär – alle Rechte vorbehalten. Die Integration darf zusammen mit einem K9SNTNL-Konto installiert
-und genutzt werden; Kopieren, Verändern und Weitergeben sind nicht erlaubt. Details: [LICENSE](LICENSE).
+[Apache-Lizenz 2.0](LICENSE). Der Name „K9SNTNL“ und das Logo sind davon nicht erfasst (Abschnitt 6 der Lizenz)
+und dürfen nicht für eigene Produkte verwendet werden.

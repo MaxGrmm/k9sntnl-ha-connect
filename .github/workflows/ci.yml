@@ -31,8 +31,6 @@ jobs:
       - uses: hacs/action@main
         with:
           category: integration
-          # brands: Das Symbol liefert die Integration selbst mit (custom_components/k9sntnl/brand/, ab Home
-          #   Assistant 2026.3); ein Eintrag im Repo home-assistant/brands ist dafür nicht nötig.
-          # license: Die Lizenz ist bewusst proprietär (LICENSE). HACS verlangt eine Open-Source-Lizenz nur für
-          #   die Aufnahme in die Standardliste; als benutzerdefiniertes Repository funktioniert alles.
-          ignore: brands license
+          # Das Symbol liefert die Integration selbst mit (custom_components/k9sntnl/brand/, ab Home Assistant
+          # 2026.3); ein Eintrag im Repo home-assistant/brands ist dafür nicht nötig
+          ignore: brands
