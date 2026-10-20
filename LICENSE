@@ -1,0 +1,33 @@
+K9SNTNL HA Connect – Lizenz / License
+
+Copyright (c) 2026 K9SNTNL (MaxGrmm). Alle Rechte vorbehalten. All rights reserved.
+
+DEUTSCH
+
+Diese Software (die Home-Assistant-Integration „K9SNTNL“ in diesem Repository) ist urheberrechtlich
+geschützt und keine Open-Source-Software. Dass der Quelltext öffentlich einsehbar ist, räumt keine
+weiteren Rechte ein.
+
+Erlaubt ist ausschließlich:
+  - die Software unverändert herunterzuladen, zu installieren und in einer eigenen Home-Assistant-
+    Installation zu nutzen, um mit einem K9SNTNL-Konto auf den K9SNTNL-Dienst zuzugreifen.
+
+Nicht erlaubt ist insbesondere, ohne vorherige schriftliche Zustimmung des Rechteinhabers:
+  - die Software oder Teile davon zu kopieren (außer für die erlaubte Nutzung), zu verändern,
+    zu bearbeiten oder abgeleitete Werke zu erstellen,
+  - sie weiterzugeben, zu veröffentlichen, zu vermieten, zu verkaufen oder unterzulizenzieren,
+  - sie oder Teile davon in andere Software zu übernehmen oder mit anderen Diensten als K9SNTNL zu nutzen.
+Gesetzlich zwingend erlaubte Handlungen bleiben unberührt.
+
+Die Software wird ohne Gewähr bereitgestellt. Die Haftung richtet sich nach den gesetzlichen
+Bestimmungen, soweit sie nicht wirksam ausgeschlossen werden kann; im Übrigen ist sie ausgeschlossen.
+
+ENGLISH (for convenience; the German text prevails)
+
+This software is proprietary and not open source. Making the source code publicly visible grants no
+further rights. You may only download, install and use the unmodified software in your own Home
+Assistant installation to access the K9SNTNL service with a K9SNTNL account. Without prior written
+permission of the copyright holder you may not copy (except for the permitted use), modify, create
+derivative works of, distribute, publish, rent, sell or sublicense the software or parts of it, or
+use it with services other than K9SNTNL. Rights that cannot be excluded by law remain unaffected.
+The software is provided "as is", without warranty of any kind, to the extent permitted by law.

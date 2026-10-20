@@ -53,3 +53,8 @@ Die Werte werden alle 30 Sekunden abgefragt.
 python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 .venv/bin/pytest
 ```
+
+## Lizenz
+
+Proprietär – alle Rechte vorbehalten. Die Integration darf zusammen mit einem K9SNTNL-Konto installiert
+und genutzt werden; Kopieren, Verändern und Weitergeben sind nicht erlaubt. Details: [LICENSE](LICENSE).
