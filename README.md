@@ -1,5 +1,9 @@
 # K9SNTNL für Home Assistant
 
+*English:* Home Assistant integration for K9SNTNL dog trailers: trailers and boxes as devices, temperature/humidity/
+voltage/power sensors, connectivity of sensors and trailer, and cameras (snapshots and live view). Install via HACS as a
+custom repository, then pair with the code shown in the K9SNTNL app under *My account → Home Assistant*. Read-only.
+
 Zeigt deine K9SNTNL-Anhänger in Home Assistant an: jeder Anhänger und jede Box als Gerät, die Fühler
 (Temperatur, Luftfeuchte, Spannung, Leistung) als Sensoren, die Kameras mit Live-Bild und der Online-Status
 von Sensoren und Anhänger.
@@ -49,3 +53,8 @@ Die Werte werden alle 30 Sekunden abgefragt.
 python3 -m venv .venv && .venv/bin/pip install -r requirements-dev.txt
 .venv/bin/pytest
 ```
+
+## Lizenz
+
+[Apache-Lizenz 2.0](LICENSE). Der Name „K9SNTNL“ und das Logo sind davon nicht erfasst (Abschnitt 6 der Lizenz)
+und dürfen nicht für eigene Produkte verwendet werden.
