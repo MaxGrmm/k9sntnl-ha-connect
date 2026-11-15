@@ -1,7 +1,7 @@
 name: Release
 
 # Nach jedem Merge auf main: Gibt es zur Version in manifest.json noch kein Release, wird es angelegt.
-# HACS zeigt Updates anhand dieser Releases an (ohne Releases nur anhand von Commits, und das oft verzögert).
+# Der Home Assistant Marketplace (früher HACS) zeigt Updates anhand dieser Releases an (ohne Releases nur anhand von Commits, und das oft verzögert).
 on:
   push:
     branches: [main]
