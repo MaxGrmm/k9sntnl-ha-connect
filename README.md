@@ -1,23 +1,26 @@
 # K9SNTNL für Home Assistant
 
-*English:* Home Assistant integration for K9SNTNL dog trailers: trailers and boxes as devices, temperature/humidity/
-voltage/power sensors, connectivity of sensors and trailer, and cameras (snapshots and live view). Install via HACS as a
-custom repository, then pair with the code shown in the K9SNTNL app under *My account → Home Assistant*. Read-only.
+*English:* Home Assistant integration for K9SNTNL dog trailers: trailers and boxes as devices, temperature sensors,
+connectivity of sensors and trailer, and cameras (snapshots and live view). Install via the Home Assistant Marketplace
+(formerly HACS) as a custom repository, then pair with the code shown in the K9SNTNL app under
+*My account → Home Assistant*. Read-only.
 
-Zeigt deine K9SNTNL-Anhänger in Home Assistant an: jeder Anhänger und jede Box als Gerät, die Fühler
-(Temperatur, Luftfeuchte, Spannung, Leistung) als Sensoren, die Kameras mit Live-Bild und der Online-Status
-von Sensoren und Anhänger.
+Zeigt deine K9SNTNL-Anhänger in Home Assistant an: jeder Anhänger und jede Box als Gerät, die Temperaturfühler
+als Sensoren, die Kameras mit Live-Bild und der Online-Status von Sensoren und Anhänger.
 
 Home Assistant kann dabei **nur lesen**, nichts ändern – mit denselben Rechten wie du in der K9SNTNL-App.
 
-## Installation (HACS)
+## Installation (Home Assistant Marketplace)
 
-1. In HACS oben rechts **⋮ → Benutzerdefinierte Repositories**, Adresse
+Ab Home Assistant 2026.11 heißt HACS „Marketplace“ und ist fest eingebaut (unter **Einstellungen**).
+Bereits hinzugefügte benutzerdefinierte Repositories werden übernommen.
+
+1. Im Marketplace oben rechts **⋮ → Benutzerdefinierte Repositories**, Adresse
    `https://github.com/MaxGrmm/k9sntnl-ha-connect`, Typ **Integration**.
 2. „K9SNTNL“ herunterladen und Home Assistant neu starten.
 
-Updates zeigt HACS an, sobald es ein neues [Release](https://github.com/MaxGrmm/k9sntnl-ha-connect/releases) gibt.
-Sofort prüfen: in HACS bei K9SNTNL **⋮ → Informationen aktualisieren**.
+Updates zeigt der Marketplace an, sobald es ein neues [Release](https://github.com/MaxGrmm/k9sntnl-ha-connect/releases) gibt.
+Sofort prüfen: im Marketplace bei K9SNTNL **⋮ → Informationen aktualisieren**.
 
 ## Verbinden
 
